@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "Maven"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', url: 'https://github.com/FarhathCader/3923-Farhad-A.C.M.git'
+
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+
+            post {
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image using Dockerfile in the repository
+                    docker.build('spring-boot-docker')
+                }
+            }
+
+            post {
+                success {
+                    echo 'Docker image built successfully!'
+                }
+                failure {
+                    echo 'Failed to build Docker image!'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run Docker container from the created image
+                    docker.image('spring-boot-docker').run("-p 8080:8080 -d")
+                }
+            }
+
+            post {
+                success {
+                    echo 'Docker container is running!'
+                }
+                failure {
+                    echo 'Failed to run Docker container!'
+                }
+            }
+        }
+    }
+}
