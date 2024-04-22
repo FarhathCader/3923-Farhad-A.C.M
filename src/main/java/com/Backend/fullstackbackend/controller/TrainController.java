@@ -36,7 +36,10 @@ public class TrainController {
         }
         return trainRepository.save(newTrain);   }
 
-
+    @GetMapping("/")
+    String welcome(){
+        return "welcome to this docker container";
+    }
 
     @GetMapping("/trains")
     List<Train> getAllTrains(){

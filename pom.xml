@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.codewitharjun</groupId>
-	<artifactId>fullstack-backend</artifactId>
+	<artifactId>spring-boot-docker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fullstack-backend</name>
 	<description>Backend application </description>
@@ -47,6 +47,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+
 	</build>
 
 </project>
